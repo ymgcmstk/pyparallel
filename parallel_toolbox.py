@@ -81,6 +81,7 @@ class plist(object):
     _backlog = 10
     _mpm = None
     _info_path = None
+    _temp_list_ind = None
 
     def __init__(self, targ_list, verbose=False):
         self._verbose = verbose
@@ -103,6 +104,7 @@ class plist(object):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             sock.connect((self._master_server, self._master_port))
+            self._temp_list_ind = int(sock.recv(self._bufsize))
             sock.close()
         except socket.error as err:
             if err.errno == 111:
@@ -153,6 +155,10 @@ class plist(object):
         return self
 
     def next(self):
+        if self._temp_list_ind is not None:
+            list_ind = self._temp_list_ind
+            self._temp_list_ind = None
+            return self._targ_list[list_ind]
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             sock.connect((self._master_server, self._master_port))

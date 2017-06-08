@@ -3,10 +3,12 @@
 
 from parallel_toolbox import plist
 import time
+import os
 
 def main_plist():
-    for i in plist(['a', 'i', 'u', 'e', 'o', 'ka', 'ki', 'ku', 'ke', 'ko'], verbose=True):
-        print i
+    hn = os.uname()[1]
+    for i in plist(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], verbose=True):
+        print '[%s] %s' % (hn, i)
         time.sleep(1)
     return
 

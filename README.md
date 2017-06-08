@@ -1,13 +1,5 @@
-# 新しいターミナルで
-ssh hoge@fugu
-python example_prange.py
+# What's pyparallel?
+The pyparallel is a python-based tool for distributing values of for loop iterable.
+Using this tool you can easily distribute a block of code in for loop to multiple processes / machines.
 
-# 新しいターミナルで
-ssh hoge@fuka
-python example_prange.py
-
-# 新しいターミナルで
-ssh hoge@funa
-python example_prange.py
-
-とかやってみると三つのマシンでパラメータを分散できていることがわかる(はず)
+You can immediately try this code by running a demo script `example.sh`.
