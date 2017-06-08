@@ -82,10 +82,12 @@ class plist(object):
     _mpm = None
     _info_path = None
     _temp_list_ind = None
+    _matlab_id = ''
 
-    def __init__(self, targ_list, verbose=False):
+    def __init__(self, targ_list, verbose=False, matlab_id=''):
         self._verbose = verbose
         self._targ_list = targ_list
+        self._matlab_id = matlab_id
         self._get_master_information()
         if self.is_master:
             # work as a master node
@@ -172,7 +174,10 @@ class plist(object):
         return self._targ_list[list_ind]
 
     def _get_master_information(self):
-        cur_filename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+        if len(self._matlab_id) == 0:
+            cur_filename = os.path.splitext(os.path.basename(sys.argv[0]))[0]
+        else:
+            cur_filename = self._matlab_id
         cur_dirname = os.path.abspath(os.path.dirname(os.path.join(os.getcwd(), sys.argv[0])))
         self._info_path = os.path.join(cur_dirname, '.myparallel', '%s_%d.txt' % (cur_filename, location(2)))
         if not os.path.exists(self._info_path):
@@ -187,3 +192,7 @@ class plist(object):
 class prange(plist):
     def __init__(self, *input1, **input2):
         super(prange, self).__init__(range(*input1, **input2))
+
+class prange_matlab(plist):
+    def __init__(self, matlab_id, *input1, **input2):
+        super(prange_matlab, self).__init__(range(*input1, **input2), matlab_id=matlab_id)
