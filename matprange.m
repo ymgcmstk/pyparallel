@@ -27,7 +27,7 @@ classdef matprange < handle
                 obj.id    = sprintf('%sF%dL%d', varargin{1}, obj.first, obj.last);
             end
             fprintf('[matprange] id: "%s"\n', obj.id);
-            obj.parobj = py.pyparallel.prange_matlab(obj.id, obj.first, obj.last + 1);
+            obj.parobj = py.parallel_toolbox.prange_matlab(obj.id, obj.first, obj.last + 1);
             obj.isover = false;
             obj.prepare_next();
         end
